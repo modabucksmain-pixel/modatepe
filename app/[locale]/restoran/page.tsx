@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
-import et from '/images/vaybe.jpeg';
-import kahvalti from '/images/vaybe.jpeg';
-import kahvalt2 from '/images/manzaragece.jpeg';
-import koridor from '/images/normaltasev.jpeg';
-import koridor2 from '/images/normaloda2.jpeg';
+import et from '/images/Et.jpeg';
+import kahvalti from '/images/Kahvalti.jpeg';
+import kahvalt2 from '/images/kahvalt2.jpeg';
+import koridor from '/images/koridor.jpeg';
+import koridor2 from '/images/koridor2.jpeg';
 import vaybe from '/images/vaybe.jpeg';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';

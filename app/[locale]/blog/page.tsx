@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import et from '/images/vaybe.jpeg';
-import manzaraiyi from '/images/manzaragece.jpeg';
-import normaloda from '/images/normaloda2.jpeg';
+import et from '/images/Et.jpeg';
+import manzaraiyi from '/images/manzaraiyi.jpeg';
+import normaloda from '/images/normaloda.jpeg';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { getTranslations, type Locale } from '@/lib/i18n';
