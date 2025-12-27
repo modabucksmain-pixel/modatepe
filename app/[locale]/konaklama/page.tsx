@@ -1,14 +1,28 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
-import normaloda from '/images/normaloda.jpeg';
-import deluxeoda from '/images/deluxeoda.jpeg';
-import normaltasev from '/images/normaltasev.jpeg';
-import deluxetasev from '/images/deluxetaşev.jpeg';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { MessageCircle, Users, Wifi, Car, Coffee } from 'lucide-react';
+
+// Oda ve Konaklama Fotoğrafları
+import normaloda1 from '/images/normaloda2.jpeg';
+import normaloda2 from '/images/normaltasev.jpeg';
+import normaloda3 from '/images/vaybe.jpeg';
+
+import deluxeoda1 from '/images/manzara4k.jpeg';
+import deluxeoda2 from '/images/manzaragece.jpeg';
+import deluxeoda3 from '/images/sislimanzaramk.jpeg';
+
+import tasev1 from '/images/normaltasev.jpeg';
+import tasev2 from '/images/ornekbungalov.jpeg';
+import tasev3 from '/images/sislimanzaramk.jpeg';
+
+import bungalov1 from '/images/ornekbungalov.jpeg';
+import bungalov2 from '/images/manzaragece.jpeg';
+import bungalov3 from '/images/vaybe.jpeg';
 
 interface AccommodationPageProps {
   params: { locale: Locale };
@@ -33,28 +47,28 @@ export default async function AccommodationPage({ params: { locale } }: Accommod
       title: translations.accommodation.rooms.normalRoom.title,
       description: translations.accommodation.rooms.normalRoom.description,
       count: translations.accommodation.rooms.normalRoom.count,
-      image: normaloda,
+      images: [normaloda1, normaloda2, normaloda3],
       amenities: ['WiFi', 'Klima', '2 Kişilik', 'Banyo']
     },
     {
       title: translations.accommodation.rooms.deluxeRoom.title,
       description: translations.accommodation.rooms.deluxeRoom.description,
       count: translations.accommodation.rooms.deluxeRoom.count,
-      image: deluxeoda,
+      images: [deluxeoda1, deluxeoda2, deluxeoda3],
       amenities: ['WiFi', 'Klima', '2+2 Kişilik', 'Geniş oda']
     },
     {
       title: translations.accommodation.rooms.normalStoneHouse.title,
       description: translations.accommodation.rooms.normalStoneHouse.description,
       count: translations.accommodation.rooms.normalStoneHouse.count,
-      image: normaltasev,
+      images: [bungalov1, bungalov2, bungalov3],
       amenities: ['WiFi', 'Çift Banyo','2+2 Kişilik']
     },
     {
       title: translations.accommodation.rooms.deluxeStoneHouse.title,
       description: translations.accommodation.rooms.deluxeStoneHouse.description,
       count: translations.accommodation.rooms.deluxeStoneHouse.count,
-      image: deluxetasev,
+      images: [tasev1, tasev2, tasev3],
       amenities: ['WiFi', 'Çift Kat', '5+2 Kişilik','Çift Banyo']
     }
   ];
@@ -83,14 +97,15 @@ export default async function AccommodationPage({ params: { locale } }: Accommod
       {/* Hero Section */}
       <section className="relative h-96 flex items-center justify-center overflow-hidden">
         <Image
-          src={normaloda}
+          src={normaloda1}
           alt={translations.accommodation.title}
           fill
           className="object-cover"
           sizes="100vw"
+          priority
         />
         <div className="absolute inset-0 bg-black/50" />
-        
+
         <div className="relative z-10 text-center text-white px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in">
             {translations.accommodation.title}
@@ -126,30 +141,42 @@ export default async function AccommodationPage({ params: { locale } }: Accommod
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {roomTypes.map((room, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <div className="relative h-64 overflow-hidden rounded-t-2xl">
-                  <Image
-                    src={room.image}
-                    alt={room.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  <div className="absolute top-4 right-4 bg-brand-green text-white px-3 py-1 rounded-full text-sm font-semibold">
+                <div className="relative overflow-hidden rounded-t-2xl">
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {room.images.map((image, imgIndex) => (
+                        <CarouselItem key={imgIndex}>
+                          <div className="relative h-64">
+                            <Image
+                              src={image}
+                              alt={`${room.title} - ${imgIndex + 1}`}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="left-2" />
+                    <CarouselNext className="right-2" />
+                  </Carousel>
+                  <div className="absolute top-4 right-4 bg-brand-green text-white px-3 py-1 rounded-full text-sm font-semibold z-10">
                     {room.count}
                   </div>
                 </div>
-                
+
                 <CardHeader>
                   <CardTitle className="text-brand-green text-xl">
                     {room.title}
                   </CardTitle>
                 </CardHeader>
-                
+
                 <CardContent className="space-y-4">
                   <p className="text-brand-gray-600 leading-relaxed">
                     {room.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-2">
                     {room.amenities.map((amenity, idx) => (
                       <span
@@ -160,7 +187,7 @@ export default async function AccommodationPage({ params: { locale } }: Accommod
                       </span>
                     ))}
                   </div>
-                  
+
                   <Button asChild className="w-full whatsapp-btn">
                     <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                       <MessageCircle className="w-4 h-4 mr-2" />
